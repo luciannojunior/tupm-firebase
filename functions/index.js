@@ -10,15 +10,28 @@ exports.getUserFromUsername = functions.https.onRequest(
     const ref = admin.firestore().collection('users').where('username', '==', username)
     ref.get().then((query) => {
       // query should be an single elements's array
-      if (query.length !== 1){
-        return response.status(404).end()
-      }
-      const doc = {...query[0].data()}
-      const songsRef = admin.firestore().collection('songs').where('userId', '==', doc)
-      songsRef.get().then((query) => {
-        if (query){
-          doc.songs = query.map(a => a.data());
+
+      // if (query.length !== 1){
+      //   return response.status(404).end()
+      // }
+
+      let doc;
+
+      query.forEach((q) => {
+        doc = q
+      })
+
+      const songsRef = admin.firestore().collection('songs').where('userId', '==', doc.id)
+      songsRef.get().then((songQuery) => {
+        const songs = []
+
+        if (songQuery){
+          songQuery.forEach((q) => {
+            songs.push(q.data())
+          })
         }
+        const user = Object.assign({}, doc.data(), { songs: songs })
+        return response.status(200).json(user)
       })
     }, (err) => {
       console.log(err);
