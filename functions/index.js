@@ -7,35 +7,58 @@ admin.initializeApp()
 //
 exports.getUserFromUsername = functions.https.onRequest(
   ({ query: { username } }, response) => {
-    const ref = admin.firestore().collection('users').where('username', '==', username)
-    ref.get().then((query) => {
-      // query should be an single elements's array
+    const ref = admin
+      .firestore()
+      .collection('users')
+      .where('username', '==', username)
+    ref.get().then(
+      query => {
+        // query should be an single elements's array
 
-      // if (query.length !== 1){
-      //   return response.status(404).end()
-      // }
-
-      let doc;
-
-      query.forEach((q) => {
-        doc = q
-      })
-
-      const songsRef = admin.firestore().collection('songs').where('userId', '==', doc.id)
-      songsRef.get().then((songQuery) => {
-        const songs = []
-
-        if (songQuery){
-          songQuery.forEach((q) => {
-            songs.push(q.data())
-          })
+        if (query.docs.length !== 1){
+          return response.status(404).end()
         }
-        const user = Object.assign({}, doc.data(), { songs: songs })
-        return response.status(200).json(user)
-      })
-    }, (err) => {
-      console.log(err);
-      return response.status(500).json({error: 'Something bad has happened'})
+
+        let doc
+
+        query.forEach(q => {
+          doc = q
+        })
+
+        const songsRef = admin
+          .firestore()
+          .collection('songs')
+          .where('userId', '==', doc.id)
+        songsRef.get().then(songQuery => {
+          const songs = []
+
+          if (songQuery) {
+            songQuery.forEach(q => {
+              const { name, artist } = q.data()
+              songs.push({ name, artist })
+            })
+          }
+          const user = Object.assign({}, doc.data(), { songs: songs })
+          return response.status(200).json(user)
+        })
+      },
+      err => {
+        return response
+          .status(500)
+          .json({ error: 'Something bad has happened' })
+      }
+    )
+  }
+)
+
+exports.verifyUsername = functions.https.onRequest(
+  ({ query: { username } }, response) => {
+    const ref = admin
+      .firestore()
+      .collection('users')
+      .where('username', '==', username)
+    ref.get().then(query => {
+      response.json({ valid: query.docs.length === 0 })
     })
   }
 )
