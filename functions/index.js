@@ -58,7 +58,7 @@ exports.verifyUsername = functions.https.onRequest(
       .collection('users')
       .where('username', '==', username)
     ref.get().then(query => {
-      response.json({ valid: query.docs.length === 0 })
+      response.json({ exists: query.docs.length })
     })
   }
 )
