@@ -34,7 +34,8 @@ exports.getUserFromUsername = functions.https.onRequest(
 
           if (songQuery) {
             songQuery.forEach(q => {
-              songs.push({id: q.id, ...q.data()})
+              const song = Object.assign({}, q.data(), { id: q.id })
+              songs.push(song)
             })
           }
           const user = Object.assign({}, doc.data(), { songs: songs })

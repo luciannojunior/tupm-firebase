@@ -1,0 +1,29 @@
+[33mcommit 256070ca9b91ed5ff45c26b9dca10d9e3fa8c89b[m
+Author: Giuseppe <giuseppe.mongiovi@ccc.ufcg.edu.br>
+Date:   Mon Nov 26 00:12:58 2018 -0300
+
+    Adding atributes to song object
+
+[33mcommit b82799b1222f4e7904cc5b264827c4d34151c81d[m
+Author: Luciano Júnior <luciannojunior@gmail.com>
+Date:   Thu Oct 18 20:15:55 2018 -0300
+
+    Modifying the shape of the return object from verifyUsernmae
+
+[33mcommit fa4cdac02613efa0d3ea5e9e3888157257601ce0[m
+Author: Luciano Júnior <luciannojunior@gmail.com>
+Date:   Wed Oct 17 16:56:51 2018 -0300
+
+    Updating the functions
+
+[33mcommit 4a57236d694cfd9266f9deb29e75ed7b976b7f7f[m
+Author: Giuseppe <giuseppe.mongiovi@ccc.ufcg.edu.br>
+Date:   Wed Sep 19 22:22:09 2018 -0300
+
+    getUserFromUsername function fixed
+
+[33mcommit e8fcd81cf0cd7f745ab6957d2138af4d6fa1da97[m
+Author: Luciano Júnior <luciannojunior@gmail.com>
+Date:   Wed Sep 19 17:31:48 2018 -0300
+
+    Initial commit
